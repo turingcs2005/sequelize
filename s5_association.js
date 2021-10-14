@@ -25,12 +25,27 @@ We probably will not use:
 ⭐ 'SET DEFAULT' - foreign key set to default value (foreign key must have default value definition)
 */
 
+const Kid = require('./models/kid');
+const Mom = require('./models/mom');
+const Dad = require('./models/dad');
 const sequelize = require('./db/postgres');
-const { Foo, Bar } = require('./models/association_one_to_one');
 
 ( async () => {
     try {
         await sequelize.sync({force: true});
+        Mom.bulkCreate([
+            {firstName: 'Sue', lastName: 'Hsieh'},
+            {firstName: 'Claire', lastName: 'Smith'}
+        ]);
+
+        Dad.bulkCreate([
+
+        ])
+
+        Kid.bulkCreate([
+            {firstName: 'Joe', lastName: 'Hsieh'},
+            {firstName: 'Ryan', lastName: 'Smith'},
+        ]);
     } catch(e) {
         console.log('Error:', e);
     }

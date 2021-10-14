@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/postgres');
-const Kid = require('./Kid');
-const Dad = require('./Dad');
+const Kid = require('./kid');
+const Dad = require('./dad');
 
 class Mom extends Model {
     get fullName() {
@@ -21,11 +21,22 @@ Mom.init({
         tableName: 'Moms'
 });
 
+/* 💩 You need to place pairs of hasMany(), hasOne(), belongsTo() in a single file.
+   💩 You need to use both hasOne()/hasMany() and belongsTo(). */
+// One-to-may
 Mom.hasMany(Kid);
+Kid.belongsTo(Mom, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+    foreignKey: 'myKidId'
+});
+
+// One-to-one
 Mom.belongsTo(Dad, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
     foreignKey: 'myHusbandId'
 });
+Dad.hasOne(Mom);
 
 module.exports = Mom;

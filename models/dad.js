@@ -1,14 +1,14 @@
-// One-to-many mapping: Mom.hasMany(Kid)
+// One-to-One mapping: Dad.hasOne(Mom)
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/postgres');
-const Mom = require('./Mom');
+const Mom = require('./mom');
 
-class Kid extends Model {
+class Dad extends Model {
     get fullName() {
         return this.firstName + ' ' + this.lastName;
     }
 }
-Kid.init({
+Dad.init({
     firstName: {
         type: DataTypes.STRING
     },
@@ -17,12 +17,8 @@ Kid.init({
     }
 }, {
         sequelize,
-        modelName: 'Kid',
-        tableName: 'Kids'
+        modelName: 'Dad',
+        tableName: 'Dads'
 });
 
-Kid.belongsTo(Mom, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-    foreignKey: 'myKidId'
-});
+module.exports = Dad;
