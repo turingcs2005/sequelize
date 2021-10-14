@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/postgres');
 const Kid = require('./Kid');
+const Dad = require('./Dad');
 
 class Mom extends Model {
     get fullName() {
