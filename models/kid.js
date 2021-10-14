@@ -1,7 +1,6 @@
 // One-to-many mapping: Mom.hasMany(Kid)
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db/postgres');
-const Mom = require('./mom');
 
 class Kid extends Model {
     get fullName() {

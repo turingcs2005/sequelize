@@ -27,15 +27,13 @@ Mom.init({
 Mom.hasMany(Kid);
 Kid.belongsTo(Mom, {
     onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-    foreignKey: 'myKidId'
+    onUpdate: 'CASCADE'
 });
 
 // One-to-one
 Mom.belongsTo(Dad, {
     onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-    foreignKey: 'myHusbandId'
+    onUpdate: 'CASCADE'
 });
 Dad.hasOne(Mom);
 

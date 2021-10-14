@@ -25,29 +25,33 @@ We probably will not use:
 ⭐ 'SET DEFAULT' - foreign key set to default value (foreign key must have default value definition)
 */
 
-const Kid = require('./models/kid');
+// 💩💩💩💩💩 Import order matters. Model defining mapping needs to be imported first. Or define models in a single file.
 const Mom = require('./models/mom');
+const Kid = require('./models/kid');
 const Dad = require('./models/dad');
+
 const sequelize = require('./db/postgres');
 
 ( async () => {
     try {
         await sequelize.sync({force: true});
-        Mom.bulkCreate([
-            {firstName: 'Sue', lastName: 'Hsieh'},
+
+        await Dad.bulkCreate([
+            {firstName: 'James', lastName: 'Hsieh'}
+        ]);
+
+        await Mom.bulkCreate([
+            {firstName: 'Sue', lastName: 'Hsieh', DadId: 1},
             {firstName: 'Claire', lastName: 'Smith'}
         ]);
 
-        Dad.bulkCreate([
-
-        ])
-
-        Kid.bulkCreate([
-            {firstName: 'Joe', lastName: 'Hsieh'},
-            {firstName: 'Ryan', lastName: 'Smith'},
+        await Kid.bulkCreate([
+            {firstName: 'Joe', lastName: 'Hsieh', MomId: 1},
+            {firstName: 'Ryan', lastName: 'Smith', MomId: 2},
         ]);
     } catch(e) {
         console.log('Error:', e);
     }
 }
 )();
+// 🍑 In production, we have no idea what Id's are created, so we have to use multiple async calls to save these hierarchic data.
