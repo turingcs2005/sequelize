@@ -14,15 +14,17 @@ class Student extends Model {
 Student.init({
     firstName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        // validation
+        validate: {
+            notEmpty: true, // empty string not allowed 
+            isAlpha: true,  // only allows English letters
+            len: [2, 256]   // max/min length
+        }
     },
     lastName: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    nationality: {
-        type: DataTypes.STRING,
-        defaultValue: 'U.S.A.'
     },
     age: {
         type: DataTypes.INTEGER,
@@ -34,7 +36,15 @@ Student.init({
     }
 }, {
     sequelize,
-    modelName: 'Student'
+    modelName: 'Student',
+    // model-wide validation: if you are under 18 years old, you are not allowed to have more than 10k cash
+    validate: {
+        cashLimit() {
+            if ((this.age < 18) && (this.cash > 1e4)) {
+                throw new Error('You are under 18 and are not allowed to have cash over 10k!');
+            }
+        }
+    }
     // tableName: 'xxxx' 
 });
 

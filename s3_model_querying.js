@@ -4,8 +4,6 @@ const { Op } = require('sequelize');   // operators
 
 /* sequelize CRUD operations */
 
-
-
 ( async () => {
     await User.sync({force: true});
 
@@ -19,12 +17,10 @@ const { Op } = require('sequelize');   // operators
     );
 
     // 2. select: findAll(), findOne()
-    // select all: findAll() 
-    // returns an array of Model instances
-    const users = await User.findAll();
+    const users = await User.findAll(); // return an array of instances  
     console.log(users.length);
-    users.forEach(x => console.log(x.lastName));
-    console.log(users.every(x => x.lastName === 'Sanborn')); 
+    users?.forEach(x => console.log(x.dataValues.lastName));
+    console.log(users?.every(x => x.dataValues.lastName === 'Sanborn')); // is every user from the Sanborn family?
 
     // select attributes
     // you can use 
@@ -34,7 +30,7 @@ const { Op } = require('sequelize');   // operators
     const names = await User.findAll({
         attributes: ['lastName', 'firstName']
     });
-    names.map(x => x.dataValues).forEach(x => {console.log(x)});
+    names?.forEach(x => {console.log(x.dataValues)}); // array of {lastName, firstName}
 
     // operators: and, or, gt, gte, lt, lte, is, not, or, between, notBetween, reqexp, etc.
     const firstNames = await User.findAll({
@@ -47,7 +43,7 @@ const { Op } = require('sequelize');   // operators
         }
     });
 
-    firstNames.map(x => x.dataValues).forEach(x => {console.log(x.firstName)});
+    firstNames.forEach(x => {console.log(x.dataValues.firstName)});
     
     // query with functions 
     const adv = await User.findAll({
@@ -55,15 +51,15 @@ const { Op } = require('sequelize');   // operators
         where: sequelize.where(sequelize.fn('char_length', sequelize.col('lastName')), 5)
     })
 
-    adv.map(x => x.dataValues).forEach(x => {console.log(x.firstName)});
+    adv.forEach(x => {console.log(x.dataValues.firstName)});
 
-    // findOne() finds one item 
+    // findOne() finds the first item meeting criteria
     const u = await User.findOne({
         attributes: ['firstName'],
         where: {lastName: 'Smith'},
         order: [ ['createdAt', 'DESC'] ]
     });
-    console.log(u.dataValues.firstName);  // 
+    console.log(u?.dataValues.firstName);  // 
 
     // 3. update: update()
     await User.update( {lastName: 'Price'}, {
@@ -78,7 +74,10 @@ const { Op } = require('sequelize');   // operators
             firstName: 'Tommy'
         }
     });
+    
+    // 5. other convenience functions such as count, max, min, sum
+    const maxAge = await User.max('age');
+    console.log(maxAge);
 
 })();
 
-// other convenience functions such as count, max, min, sum
