@@ -25,10 +25,9 @@ We probably will not use:
 ⭐ 'SET DEFAULT' - foreign key set to default value (foreign key must have default value definition)
 */
 
-// 💩💩💩💩💩 Import order matters. Model defining mapping needs to be imported first. Or define models in a single file.
-const Mom = require('./models/mom');
-const Kid = require('./models/kid');
 const Dad = require('./models/dad');
+const Kid = require('./models/kid');
+const Mom = require('./models/mom');
 
 const sequelize = require('./db/postgres');
 
