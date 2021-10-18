@@ -31,8 +31,6 @@ const Mom = require('./models/mom');
 const Buddy = require('./models/buddy');
 
 const sequelize = require('./db/postgres');
-const { associations } = require('./models/dad');
-const { Sequelize } = require('sequelize');
 
 ( async () => {
     try {
@@ -265,9 +263,9 @@ const { Sequelize } = require('sequelize');
             }
         });
 
-        // BeausDads.forEach(x => {
-        //     console.log(x.firstName, x.lastName, x.Mom?.firstName, x.Mom?.lastName);  // Joe Biden Jill Biden
-        // });
+        BeausDads.forEach(x => {
+            console.log(x.firstName, x.lastName, x.Mom?.firstName, x.Mom?.lastName);  // Joe Biden Jill Biden
+        });
 
     } catch(e) {
         console.log('Error:', e);
