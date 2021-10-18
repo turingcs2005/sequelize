@@ -24,10 +24,13 @@ Mom.init({
 /* 💩 You need to place pairs of hasMany(), hasOne(), belongsTo() in a single file.
    💩 You need to use both hasOne()/hasMany() and belongsTo(). */
 // One-to-may
-Mom.hasMany(Kid);
+Mom.hasMany(Kid, {
+    foreignKey: 'myMom'  // 💩 Custom foreign key needs to be declared in both hasMany() & belongsTo()
+});
 Kid.belongsTo(Mom, {
     onDelete: 'SET NULL',
-    onUpdate: 'CASCADE'
+    onUpdate: 'CASCADE',
+    foreignKey: 'myMom'
 });
 
 // One-to-one
