@@ -62,6 +62,7 @@ const Hero = require('./models/hero');
 
         // 💩💩💩💩💩 Somehow, Spiderman is above Wonderwoman and is returned. This is very confusing.
         console.log((await Peter.getHero()).firstName); // 'Spider'
+        /* 😈 Be very careful when restoring soft-deleted items! Unintended consequences may arise. */
 
     } catch(e) {
         console.log('Error:', e);
