@@ -219,6 +219,8 @@ const sequelize = require('./db/postgres');
             firstName: 'Ashley', lastName: 'Biden'
         });
 
+        /* 💩💩💩 Please note the plural form of the noun: setKids(), not setKid(). 
+        For one-to-one mapping, use setKid(). */
         await Jill.setKids([Hunter, Beau, Ashley]);
         // console.log(Jill.Kids.length);           // 2. Jill in memory has not been updated yet
         // console.log(await Jill.countKids());     // 3
